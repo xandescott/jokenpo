@@ -635,14 +635,14 @@ body::before {
 
 .music-control {
   position: absolute;
-  top: 4px;
+  top: 12px;
   right: 10px;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   font-family: sans-serif;
   background: rgba(255,255,255,0.9);
-  padding: 6px 8px;
+  padding: 5px 7px;
   border-radius: 6px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
   z-index: 10;
@@ -653,6 +653,7 @@ body::before {
   margin-bottom: 4px;
   font-weight: bold;
   font-size: 0.7rem;
+  display: none;
 }
 
 /* Caixa de seleção */
@@ -660,10 +661,10 @@ body::before {
   background-color: white;
   color: #111827;
   border: 1px solid #ccc;
-  height: 28px;
-  width: 180px;
+  height: 20px;
+  width: 150px;
   font-size: 0.75rem;
-  padding: 6px 10px;
+  padding: 0px 0px;
   border-radius: 6px;
   outline: none;
 }
