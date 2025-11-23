@@ -1,0 +1,146 @@
+<!--
+  Trabalho de Faculdade: Jokenpô — Pop-up Interativo
+
+  Descrição:
+  - Projeto para disciplina Desenvolvimento em Javascript
+  - Aula prática de APIS de Navegador — Manipulando Áudio e Gráfico - Unidade 3
+  - Implementa um jogo Jokenpô com animações, sons e lógica de placar
+  - Inclui feedback visual/sonoro, seleção de música e tratamento de estados especiais (ex.: suspense em 9x9)
+
+  Autor:
+  - Francisco Alexandre Calixto - Matrícula - 2025362301 
+
+  Instituição:
+  - UNIVERSIDADE PITÁGORAS UNOPAR ANHANGUERA
+
+  Curso:
+  Sistemas para Internet – Tecnológico
+
+  Professor:
+  - Anderson E. Macedo Gonçalves
+
+  Versão:
+  - 1.0
+
+  Data:
+  - 23/11/2025
+
+  Contato:
+  - alexandre.playnet@gmail.com
+
+  Licença / Uso:
+  - Trabalho acadêmico; uso sujeito às políticas da instituição.
+-->
+
+
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Jokenpô — Pop-up</title>
+  <link rel="stylesheet" href="styles.css" />
+  
+</head>
+<body>
+  <div class="backdrop" id="backdrop">
+
+    <video autoplay muted loop id="bgVideo">
+      <source src="assets/backgrounds/medieval-scene.mp4" type="video/mp4">
+    </video>
+    
+    <div class="popup" role="dialog" aria-modal="true">
+
+      <div class="audio-settings">
+        <button id="toggleMusic" class="music-btn">🔊 Música: Ligada</button>
+      
+        <button id="toggle-audio" class="mode-btn">Modo: Voz</button>
+      
+        <div class="music-control">
+          <label for="musicSelect">Selecionar música</label>
+          <select id="musicSelect" class="music-select">
+            <option value="assets/audio/bg-music.mp3">8-bit Game SFX Sound</option>
+            <option value="assets/audio/bg-music2.mp3">Fantasy Kingdom</option>
+            <option value="assets/audio/bg-music3.mp3">Medieval Adventure</option>
+            <option value="assets/audio/bg-music4.mp3">Medieval Background</option>
+            <option value="assets/audio/bg-music5.mp3">Medieval Festive</option>
+            <option value="assets/audio/bg-music6.mp3">Medieval Happy</option>
+            <option value="assets/audio/bg-music7.mp3">Medieval Irish Celtic Ireland</option>
+            <option value="assets/audio/bg-music8.mp3">Medieval Waltz</option>
+            <option value="assets/audio/bg-music9.mp3">Medieval Fantasy</option>
+          </select>
+        </div>
+      </div>      
+      
+      <!-- Áudios -->
+      <audio id="bgMusic" loop preload="auto"></audio>
+      <audio id="jokenpoVoice" src="assets/audio/jokenpoVoice.mp3" preload="auto"></audio>
+      <audio id="jokenpoHands" src="assets/audio/jokenpoHands.mp3" preload="auto"></audio>
+      <audio id="audioWin" src="assets/audio/8-bit-win.mp3" preload="auto"></audio>
+      <audio id="audioFail" src="assets/audio/8-bit-fail.mp3" preload="auto"></audio>
+      <audio id="audioDraw" src="assets/audio/8-bit-draw.mp3" preload="auto"></audio>
+      <audio id="audioEpicWin" src="assets/audio/epic-win.mp3" preload="auto"></audio>
+      <audio id="audioGameOver" src="assets/audio/game-over.mp3" preload="auto"></audio>
+      <audio id="audioSuspenseUser" src="assets/audio/suspenseUser.mp3" preload="auto"></audio>
+      <audio id="audioSuspenseCPU" src="assets/audio/suspenseCPU.mp3" preload="auto"></audio>
+      <audio id="audioSuspense9x9" src="assets/audio/suspense9x9.mp3" preload="auto"></audio>
+            
+      <h2 class="game-title">Jokenpô</h2>
+
+      <div class="battle">
+        <div class="players">
+          <img id="charactersImg" src="assets/images/initial-scene.png" alt="Bonecos jogando Jokenpô" class="duel-img">
+
+          <!-- Lado esquerdo -->
+          <div class="player-side left">
+            <div class="hand hand-left closed" id="handLeft"></div>
+            <div class="choice-bubble" id="leftChoice">?</div>
+          </div>
+
+          <!-- Lado direito -->
+          <div class="player-side right">
+            <div class="hand hand-right closed" id="handRight"></div>
+            <div class="choice-bubble" id="rightChoice">?</div>
+          </div>
+        </div>
+
+        <!-- Frase motivacional -->
+        <div class="chant-wrap" aria-hidden="false">
+          <div class="chant" id="chant" aria-live="polite">Escolha sua jogada!</div>
+        </div>
+      </div>
+
+      <!-- Controles lado a lado -->
+      <div class="controls two-column">
+        <!-- Botões + feedback -->
+        <div class="left-panel">
+          <div class="options">
+            <button id="btn-rock" class="option rock" data-choice="rock">✊</button>
+            <button id="btn-paper" class="option paper" data-choice="paper">✋</button>
+            <button id="btn-scissors" class="option scissors" data-choice="scissors">✌️</button>
+          </div>                   
+          <div class="feedback">
+            <div id="gameResult" class="result-text">Faça sua escolha</div>
+          </div>
+        </div>
+
+        <!-- Placar -->
+        <div class="right-panel">
+          <div class="score-group">
+            <h3 class="score-title">Placar</h3>
+            <div class="scoreboard" aria-label="Placar">
+            <div><strong>Você</strong> <span id="user-score">0</span></div>
+            <div><strong>Computador</strong> <span id="cpu-score">0</span></div>
+          </div>
+          <!-- Botão para reiniciar o placar -->
+          <button id="reset-btn" class="btn" type="button">Reiniciar</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="script.js" defer></script>
+  
+</body>
+</html>

@@ -1,0 +1,876 @@
+:root {
+  --backdrop: #07102299;
+  --popup: #ffffff;
+  --accent: #0ea5a4;
+  --muted: #334155;
+  --win: #16a34a;
+  --lose: #ef4444;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+
+body {
+  background: linear-gradient(180deg, #061022, #04111b);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4); /* camada escura */
+  z-index: -1;
+}
+
+/* backdrop & popup centralizado */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  background: var(--backdrop);
+  padding-top: 0vh; /* espaço acima da popup */
+  padding-bottom: 0vh; /* espaço abaixo para evitar corte */
+}
+
+.popup {
+  position: fixed;
+  top: 44%;              /* diminua este valor para subir mais */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.50); /* branco com transparência */
+  backdrop-filter: blur(6px);            /* efeito de desfoque no fundo */
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  z-index: 999;
+  box-sizing: border-box;
+  padding-bottom: 20px; /* ou menos, se quiser mais compacto */  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  overflow-y: clip;         /* permite rolagem se necessário */
+  overscroll-behavior: contain;
+  margin: 40px auto;
+  width: clamp(320px, 96vw, 500px);
+  height: 700px;      /* altura fixa */
+  max-height: 97vh;
+  max-width: 100%;
+  padding: clamp(15px, 2vw, 20px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* título */
+.game-title {
+  margin-top: 50px;
+  margin-bottom: 5px;
+  text-align: center;
+  font-size: 36px;
+  font-weight: bold;
+  color: #0f1724;
+  text-shadow: 2px 2px 0 #fff, 4px 4px 0 #ffcc00;
+  animation: pulseTitle 2s infinite;
+  font-family: 'Press Start 2P', cursive; /* estilo retrô opcional */
+}
+
+/* Animação suave de pulsação */
+@keyframes pulseTitle {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.85; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* área do duelo */
+.battle {
+  position: relative;
+  width: 100%;
+  max-width: none;       /* deixa ocupar toda a largura da tela */
+  margin: 10px auto;
+  padding: 10px 0;
+  justify-content: center; /* centraliza os elementos dentro */
+}
+
+/* contêiner dos bonecos */
+.players {
+  width: 200px;
+  height: 240px;
+  max-width: 350px;
+  padding: 0;             /* remove espaçamento interno */
+  margin: 0 auto; 
+  display: flex;        
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;       /* evita sobras ou barras de rolagem */
+}
+
+/* imagem do duelo */
+.duel-img, #charactersImg {
+  width: 100%;  
+  height: 100%;
+  display: block;
+  margin: 0 auto;
+  object-fit: cover;  
+  border-radius: 10px;
+  overflow: hidden; /* garante que a imagem siga o raio */  
+  transition: opacity 180ms ease, transform 180ms ease;
+  opacity: 1;
+}
+
+.duel-img.fade-out, #charactersImg.fade-out {
+  opacity: 0;
+  transform: scale(0.98);
+}
+
+/* mãos e bolhas posicionadas abaixo de cada boneco */
+.hand,
+.choice-bubble {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  color: white;
+}
+
+/* mãos */
+.hand {
+  background: #0f1724;
+}
+
+.hand.closed {
+  background: linear-gradient(180deg, #111827, #0b1220);
+  box-shadow: 0 8px 20px rgba(2,6,23,0.4);
+}
+
+.hand.open {
+  background: linear-gradient(180deg, #06b6d4, #7dd3fc);
+  box-shadow: 0 12px 30px rgba(6,182,212,0.15);
+  transition: transform 300ms ease, background 260ms;
+}
+
+#handLeft {
+  bottom: 10px;
+  left: 40px;
+}
+
+#handRight {
+  bottom: 10px;
+  right: 40px;
+}
+
+/* bolhas de escolha */
+.choice-bubble {
+  background: #f8fafc;
+  color: #0f1724;
+  font-weight: 700;
+  padding: 8px 12px;
+  font-size: 18px;
+  box-shadow: 0 8px 24px rgba(2,6,23,0.08);
+}
+
+.choice-bubble.win {
+  border: 3px solid var(--win);
+  background: #ecfdf5;
+  color: #065f46;
+}
+
+.choice-bubble.lose {
+  border: 3px solid var(--lose);
+  background: #fff1f2;
+  color: #7f1d1d;
+}
+
+#leftChoice {
+  bottom: 80px;
+  left: 40px;
+  transform: translateX(0); /* remove centralização */
+}
+
+#rightChoice {
+  bottom: 80px;
+  right: 40px;
+  transform: translateX(0); /* remove centralização */
+}
+
+/* controles */
+.controls.two-column {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto;
+  padding-bottom: 20px;
+  box-sizing: border-box;
+}
+
+/* Coluna esquerda: botões + feedback */
+.left-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: -18px; /* sobe os botões */ 
+  min-width: 190px;
+}
+
+.top-controls {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  z-index: 5; /* menor que o título */
+}
+
+.options {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;  
+  justify-content: center;
+}
+
+.choice-btn {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  font-size: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: #f1f5f9;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.choice-btn:hover {
+  transform: scale(1.1);
+  background: #e2e8f0;
+}
+
+.choice-btn:active {
+  transform: scale(0.95);
+  background: #cbd5e1;
+}
+
+.feedback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.option {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  font-size: 66px;
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+  margin: 0 5px; /* 5px de espaço à esquerda e direita */
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+/* Pedra = verde esmeralda */
+.option.rock {
+  background: linear-gradient(135deg, #065f46, #34d399);
+}
+
+/* Papel = azul claro */
+.option.paper {
+  background: linear-gradient(135deg, #3b82f6, #60a5fa);
+}
+
+/* Tesoura = vermelho alaranjado */
+.option.scissors {
+  background: linear-gradient(135deg, #ef4444, #f87171);
+}
+
+.option:hover {
+  transform: scale(1.1);
+  filter: brightness(1.2);
+}
+
+.option:active {
+  transform: scale(0.95);
+  filter: brightness(0.9);
+}
+
+.result-area {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  text-align: center;
+}
+
+.result-text {
+  font-family: 'Segoe UI', 'Arial Rounded MT Bold', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f1724;
+  text-align: center;
+  padding: 6px 12px;
+  background: linear-gradient(to right, #fef9c3, #fde68a);
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.result-text.win {
+  background: linear-gradient(to right, #bbf7d0, #86efac);
+  color: #065f46;
+}
+
+.result-text.lose {
+  background: linear-gradient(to right, #fecaca, #f87171);
+  color: #7f1d1d;
+}
+
+.result-text.draw {
+  background: linear-gradient(to right, #e0e7ff, #a5b4fc);
+  color: #1e3a8a;
+}
+
+
+/* Painel direito com alinhamento vertical */
+.right-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  min-width: 140px;
+  margin-top: -15px; /* sobe o placar */ 
+}
+
+.btn {
+  padding: 6px 14px;
+  font-size: 15px;
+  border-radius: 6px;
+  background-color: #0f1724;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+/* Agrupamento do título + placar */
+.score-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Título do placar */
+.score-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f1724;
+  margin: 0;
+  line-height: 1;
+}
+
+/* Placar */
+.scoreboard {
+  display: grid;
+  gap: 6px;
+  width: 100%;
+}
+
+/* Linha do placar (Você / Computador) */
+.scoreboard > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f8fafc;
+  border: 1px solid rgba(2,6,23,0.08);
+  border-radius: 8px;
+  font-weight: 600;
+  color: #0f1724;
+  padding: 6px 10px;
+  transition: background-color 180ms ease, transform 180ms ease;
+}
+
+/* Nome do jogador */
+.scoreboard > div strong {
+  color: #0f1724;
+  font-weight: 700;
+}
+
+/* Valor do ponto como "badge" */
+.scoreboard > div span {
+  min-width: 36px;
+  text-align: center;
+  background: #e2e8f0;
+  color: #0f1724;
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-weight: 700;
+}
+
+/* Destaque do vencedor */
+.scoreboard .winner {
+  background: #d1f7d8;        /* verde claro */
+  border-color: #a8e6b3;
+  transform: translateY(-1px);
+}
+
+.scoreboard .winner span {
+  background: #34d399;        /* badge verde */
+  color: #062b1f;
+}
+
+/* Indicação do perdedor */
+.scoreboard .loser {
+  background: #fde2e2;        /* vermelho claro */
+  border-color: #f8b4b4;
+  opacity: 0.95;
+}
+
+.scoreboard .loser span {
+  background: #fca5a5;        /* badge vermelha */
+  color: #3b0d0d;
+}
+
+/* Empate: neutro com sutil destaque */
+.scoreboard .tie {
+  background: #eef2ff;        /* azul claro */
+  border-color: #c7d2fe;
+}
+
+.scoreboard .tie span {
+  background: #c7d2fe;
+  color: #1e293b;
+}
+
+/* animações de bater mão */
+@keyframes shakeHands {
+  0% { transform: translateY(0); }
+  25% { transform: translateY(-10px); }
+  50% { transform: translateY(0); }
+  75% { transform: translateY(-6px); }
+  100% { transform: translateY(0); }
+}
+
+.hand.shake {
+  animation: shakeHands 600ms ease-in-out 0s 3;
+}
+
+/* Correção definitiva de centralização */
+.backdrop {
+  display: flex;
+  align-items: flex-start;    /* mantém popup mais para cima, evitando corte inferior */
+  justify-content: center;
+  padding-top: 0vh;
+  padding-bottom: 0vh;
+}
+
+.popup h2 {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+}
+
+/* Limita largura e centraliza cada seção interna */
+.battle,
+.chant,
+.controls {
+  width: 100%;
+  max-width: auto;
+  margin: 0 auto;
+}
+
+/* Bloco da ilustração com overlays centralizado */
+.players {
+  position: relative;
+  width: 100%;
+  max-width: 340px;
+  margin: 0 auto;
+}
+
+/* Centraliza botões e resultado */
+.controls {
+  
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.options {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.result-area {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  text-align: center;
+}
+
+/* Mãos e bolhas com tamanho fixo */
+.hand,
+.choice-bubble {
+  width: 60px;
+  height: 60px;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+/* Evita que cresçam em telas grandes */
+@media screen and (min-width: 500px) {
+  .hand,
+  .choice-bubble {
+    width: 60px;
+    height: 60px;
+    font-size: 38px;
+  }
+}
+
+#handLeft  { bottom: 10px; left: 40px; }
+#handRight { bottom: 10px; right: 40px; }
+
+#leftChoice  { bottom: 10px; left: 40px; transform: translateX(0%); }
+#rightChoice { bottom: 10px; right: 40px; transform: translateX(0%); }
+
+/* Responsivo */
+@media (max-width: 100%) {
+  .controls.two-column {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .right-panel {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .options {
+    justify-content: center;
+  }
+
+  .feedback {
+    align-items: center;
+  }
+  
+  .battle,
+  .chant,
+  .controls {
+    max-width: 100%;
+  }
+
+  .players {
+    max-width: 340px;
+  }
+
+  .hand {
+    width: 60px;
+    height: 60px;
+  }
+
+  .choice-bubble {
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+  }
+}
+
+/* Animação suave para bolhas */
+@keyframes shakeBubble {
+  0%   { transform: translateY(0); }
+  25%  { transform: translateY(-6px); }
+  50%  { transform: translateY(0); }
+  75%  { transform: translateY(-4px); }
+  100% { transform: translateY(0); }
+}
+
+.choice-bubble.shake {
+  animation: shakeBubble 600ms ease-in-out 0s 3;
+  will-change: transform;
+}
+
+.audio-settings {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.audio-settings button,
+.audio-settings select {
+  font-size: 1rem;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transition: background-color 0.3s ease;
+}
+
+.music-control {
+  position: absolute;
+  top: 4px;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-family: sans-serif;
+  background: rgba(255,255,255,0.9);
+  padding: 6px 8px;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  z-index: 10;
+}
+
+/* Label da caixa */
+.music-control label {
+  margin-bottom: 4px;
+  font-weight: bold;
+  font-size: 0.7rem;
+}
+
+/* Caixa de seleção */
+#musicSelect {
+  background-color: white;
+  color: #111827;
+  border: 1px solid #ccc;
+  height: 28px;
+  width: 180px;
+  font-size: 0.75rem;
+  padding: 6px 10px;
+  border-radius: 6px;
+  outline: none;
+}
+
+/* Estilo ao focar */
+#musicSelect:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59,130,246,0.3);
+}
+
+/* Estilo das opções internas */
+#musicSelect option {
+  font-size: 0.8rem;
+  padding: 4px;
+}
+
+/* Botões */
+.music-btn,
+.mode-btn {
+  font-size: 0.85rem;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transition: background-color 0.3s ease;
+}
+
+.music-btn {
+  background-color: #10b981; /* verde */
+  color: white;
+  font-size: 14px;
+}
+
+.music-btn.off {
+  background-color: #da4b4b; /* vermelho claro quando desligado */
+  font-size: 14px;
+}
+
+#toggleMusic {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  font-size: 14px;
+  height: 30px;
+  width: 150px;
+  padding: 6px 10px;
+  
+}
+
+#toggle-audio.mode-btn {
+  position: fixed;     /* fica preso à viewport */
+  top: 12px;
+  left: 45.5%;
+  transform: translateX(-50%);  /* centraliza horizontalmente */
+  z-index: 1000;
+  font-size: 14px;
+  height: 30px;
+  width: 100px;
+  background-color: #3b82f6;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: none;
+}
+
+#toggle-audio:hover {
+  background-color: #2563eb;       /* azul mais escuro no hover */
+}
+
+
+#bgVideo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;   /* ocupa toda a largura da janela */
+  height: 100vh;  /* ocupa toda a altura da janela */
+  object-fit: cover; /* ajusta proporcionalmente sem distorcer */
+  z-index: -1;
+  background-color: black; /* cor de fundo para preencher as faixas */
+  opacity: 0.95; /* ajuste para deixar mais suave */
+}
+
+.chant {
+  /* fundo removido */
+  background: none;
+
+  width: 100%;
+  max-width: 60vh;
+  min-height: 72px; /* garante espaço para até 2 linhas */
+  max-height: 80px; /* impede crescimento excessivo */
+  margin: 0px auto 0px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  word-break: break-word;
+  overflow-y: auto;       /* permite rolagem se necessário */
+  padding: 0px 0px;
+  box-sizing: border-box;
+  word-break: break-word;
+
+  color: #ffcc00; /* amarelo vibrante */
+  font-size: 18px; /* fonte maior para destaque */
+  font-weight: bold;
+  text-align: center;
+  line-height: 1.3;
+
+  /* borda preta na fonte */
+  text-shadow:
+    -1px -1px 0 #000,
+     1px -1px 0 #000,
+    -1px  1px 0 #000,
+     1px  1px 0 #000;
+
+  transition: all 0.4s ease;
+  word-wrap: break-word;
+}
+
+.chant-wrap {
+  width: 100%;
+  max-width: auto;      /* casa com controls */
+  margin-top: -12px;      /* aproxima verticalmente */
+  min-height: 20px;      /* reserva espaço para até 2 linhas */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0px 0px;
+  box-sizing: border-box;
+}
+
+/* Efeitos por resultado */
+.chant.win {
+  color: #fffb00; /* amarelo vibrante */
+  animation: pulseWin 3s ease;
+}
+
+.chant.lose {
+  color: #ff0000; /* vermelho forte */
+  animation: shakeLose 0.4s ease;
+}
+
+.chant.draw {
+  color: #eeeeee; /* cinza claro neutro */
+  animation: fadeDraw 1s ease;
+}
+
+/* estilo base já definido em .chant */
+.chant.shake {
+  color: #fffb00; /* amarelo padrão */
+  animation: vibrate 0.3s linear infinite;
+}
+
+/* Animações */
+@keyframes pulseWin {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+@keyframes shakeLose {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  50% { transform: translateX(4px); }
+  75% { transform: translateX(-4px); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes fadeDraw {
+  0% { opacity: 0.5; }
+  50% { opacity: 1; }
+  100% { opacity: 0.5; }
+}
+
+@keyframes resultFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulseTwice {
+  0%   { transform: scale(1); }
+  25%  { transform: scale(1.2); }
+  50%  { transform: scale(1); }
+  75%  { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.pulse {
+  animation: pulseTwice 0.6s ease;
+}
+
+.result-text {
+  animation: resultFadeIn 0.4s ease-out;
+}
+
+
+/* keyframes da vibração */
+@keyframes vibrate {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
