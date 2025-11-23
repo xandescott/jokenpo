@@ -1,0 +1,10 @@
+{
+  "name": "jokenpo",
+  "version": "1.0.0",
+  "description": "Jogo Pedra Papel Tesoura — Jokenpo",
+  "scripts": {
+    "start": "serve . -p 5000",
+    "build": "echo \"static site\""
+  },
+  "devDependencies": {}
+}
