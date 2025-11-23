@@ -16,9 +16,9 @@ Conteúdo do repositório
 
 Como rodar localmente
 1. Clone o repositório:
-   git clone https://github.com/SEU-USUARIO/SEU-REPO.git
+   git clone https://github.com/xandescott/jokenpo.git
 2. Abra a pasta do projeto:
-   cd SEU-REPO
+   cd xandescott
 3. Abra index.html no navegador ou use um servidor local:
    npm install -g serve
    serve .
