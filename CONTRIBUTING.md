@@ -1,6 +1,6 @@
 # Contribuindo
 
-Obrigado por contribuir com o Jokenpo!
+Obrigado por contribuir com o Jokenpô!
 
 Como contribuir
 - Abra uma issue para discutir mudanças significativas
