@@ -386,7 +386,7 @@ preloadSceneImages();
    // Frase com emoji aleatório
    if (chantEl) {
      chantEl.classList.remove('win', 'lose', 'draw');
-     const shakeEmojis = ['👊🤝', '✊✊', '✊', '✊✋', '👏👏'];
+     const shakeEmojis = ['👊👊', '✊✊', '✊', '✊✋', '👏👏'];
      const randomEmoji = shakeEmojis[Math.floor(Math.random() * shakeEmojis.length)];
      chantEl.textContent = `${randomEmoji} Sacudindo as mãos...`;
      chantEl.classList.add('shake');
@@ -635,4 +635,5 @@ preloadSceneImages();
  updateScores();
  updateScoreHighlight();
  checkSuspenseLoopState();
+
  
