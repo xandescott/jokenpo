@@ -552,15 +552,26 @@ body::before {
 #rightChoice { bottom: 10px; right: 40px; transform: translateX(0%); }
 
 /* Responsivo */
-@media (max-width: 100%) {
+@media (max-width: 720px) {
   .controls.two-column {
+    display: flex;
     flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+    width: 100%;
+  }
+
+  .left-panel {
+    width: 100%;
+    max-width: 320px;
     align-items: center;
   }
 
   .right-panel {
     width: 100%;
     max-width: 320px;
+    align-items: center;
   }
 
   .options {
