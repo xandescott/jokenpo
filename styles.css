@@ -557,6 +557,12 @@ body::before {
 
 /* Responsivo */
 @media (max-width: 720px) {
+  #bgVideo { display: none; }
+  body {
+    background: url("assets/backgrounds/medieval-scene.jpg") no-repeat center center;
+    background-size: cover;
+  }
+  
   .controls.two-column {
     display: flex;
     flex-direction: column;
