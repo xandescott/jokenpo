@@ -920,7 +920,7 @@ body::before {
   .btn { /* botão Reiniciar */
     padding: 6px 10px;
     position: relative;
-    top: 48px;
+    top: 44px;
     left: 128px;
     font-size: 15px;
     border-radius: 6px;
@@ -960,6 +960,7 @@ body::before {
     font-size: 38px;
   }
 }
+
 
 
 
