@@ -46,8 +46,8 @@ body::before {
   top: 44%;              /* diminua este valor para subir mais */
   left: 50%;
   transform: translate(-50%, -50%);
-  background: rgba(255, 255, 255, 0.10); /* branco com transparência */
-  backdrop-filter: blur(6px);            /* efeito de desfoque no fundo */
+  background: rgba(255, 255, 255, 0.3); /* branco com transparência */
+  backdrop-filter: blur(6px);             /*efeito de desfoque no fundo */
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   z-index: 999;
@@ -839,7 +839,7 @@ body::before {
   #bgVideo { display: none; }
   body {
     background: url("assets/backgrounds/medieval-scene.jpg") no-repeat center center;
-    background-size: cover;
+    background-size: contain;
     background-color: black; /* fallback */
   }
 
@@ -907,4 +907,3 @@ body::before {
     font-size: 38px;
   }
 }
-
