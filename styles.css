@@ -555,75 +555,6 @@ body::before {
 #leftChoice  { bottom: 10px; left: 40px; transform: translateX(0%); }
 #rightChoice { bottom: 10px; right: 40px; transform: translateX(0%); }
 
-/* Responsivo */
-@media (max-width: 720px) {
-  #bgVideo { display: none; }
-  body {
-    background: url("assets/backgrounds/medieval-scene.jpg") no-repeat center center;
-    background-size: cover;
-    background-color: black; /* fallback */
-  }
-  
-  .controls.two-column {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 12px;
-    width: 100%;
-  }
-
-  .left-panel {
-    width: 100%;
-    max-width: 320px;
-    align-items: center;
-  }
-
-  .right-panel {
-    width: 100%;
-    max-width: 320px;
-    align-items: center;
-  }
-
-  .options {
-    justify-content: center;
-  }
-
-  .feedback {
-    align-items: center;
-  }
-  
-  .battle,
-  .chant,
-  .controls {
-    max-width: 100%;
-  }
-
-  .players {
-    max-width: 340px;
-  }
-
-  .hand {
-    width: 60px;
-    height: 60px;
-  }
-
-  .result-area {
-    display: flex;
-    max-width: 70px;
-    flex-direction: column;
-    gap: 12px;
-    align-items: center;
-    text-align: center;
-  }
-
-  .choice-bubble {
-    width: 60px;
-    height: 60px;
-    font-size: 38px;
-  }
-}
-
 /* Animação suave para bolhas */
 @keyframes shakeBubble {
   0%   { transform: translateY(0); }
@@ -901,4 +832,71 @@ body::before {
   100% { transform: translate(0); }
 }
 
+/* Responsivo */
+@media (max-width: 720px) {
+  #bgVideo { display: none; }
+  body {
+    background: url("assets/backgrounds/medieval-scene.jpg") no-repeat center center;
+    background-size: cover;
+    background-color: black; /* fallback */
+  }
+  
+  .controls.two-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+    width: 100%;
+  }
 
+  .left-panel {
+    width: 100%;
+    max-width: 320px;
+    align-items: center;
+  }
+
+  .right-panel {
+    width: 100%;
+    max-width: 320px;
+    align-items: center;
+  }
+
+  .options {
+    justify-content: center;
+  }
+
+  .feedback {
+    align-items: center;
+  }
+  
+  .battle,
+  .chant,
+  .controls {
+    max-width: 100%;
+  }
+
+  .players {
+    max-width: 340px;
+  }
+
+  .hand {
+    width: 60px;
+    height: 60px;
+  }
+
+  .result-area {
+    display: flex;
+    max-width: 70px;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    text-align: center;
+  }
+
+  .choice-bubble {
+    width: 60px;
+    height: 60px;
+    font-size: 38px;
+  }
+}
