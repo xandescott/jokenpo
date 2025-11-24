@@ -46,7 +46,7 @@ body::before {
   top: 44%;              /* diminua este valor para subir mais */
   left: 50%;
   transform: translate(-50%, -50%);
-  background: rgba(255, 255, 255, 0.50); /* branco com transparência */
+  background: rgba(255, 255, 255, 0.10); /* branco com transparência */
   backdrop-filter: blur(6px);            /* efeito de desfoque no fundo */
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
@@ -907,3 +907,4 @@ body::before {
     font-size: 38px;
   }
 }
+
