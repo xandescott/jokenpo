@@ -1,6 +1,6 @@
-# Jokenpo
+# Jokenpô
 
-Jogo Pedra Papel Tesoura (Jokenpo) — versão web para desktop e mobile.
+Jogo Pedra Papel Tesoura (Jokenpô) — versão web para desktop e mobile.
 Demo interativa que mostra as partidas, contadores de vitórias e animações.
 
 Status
