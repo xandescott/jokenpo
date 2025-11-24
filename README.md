@@ -33,4 +33,4 @@ Contribuições
 - Envie pull requests com descrição clara das mudanças
 
 Contato
-- Autor: FRANCISCO ALEXANDRE CALIXTO — <alexandre.playnet@gmail.com>
+- Autor: Francisco Alexandre Calixto — <alexandre.playnet@gmail.com>
