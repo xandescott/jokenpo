@@ -561,7 +561,7 @@ body::before {
   body {
     background: url("assets/backgrounds/medieval-scene.jpg") no-repeat center center;
     background-size: cover;
-        background-color: black; /* fallback */
+    background-color: black; /* fallback */
   }
   
   .controls.two-column {
@@ -900,4 +900,5 @@ body::before {
   80% { transform: translate(2px, -2px); }
   100% { transform: translate(0); }
 }
+
 
