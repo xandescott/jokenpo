@@ -1,7 +1,7 @@
 {
   "name": "jokenpo",
   "version": "1.0.0",
-  "description": "Jogo Pedra Papel Tesoura — Jokenpo",
+  "description": "Jogo Pedra Papel Tesoura — Jokenpô",
   "scripts": {
     "start": "serve . -p 5000",
     "build": "echo \"static site\""
