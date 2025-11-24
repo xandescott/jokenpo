@@ -129,11 +129,11 @@ function setSceneImageWithFade(src, duration = 180) {
      if (audioMode === 'voice') {
        audioMode = 'hands';
        chantAudio = jokenpoHands;
-       toggleBtn.textContent = 'Modo: Mãos';
+       toggleBtn.textContent = '✊';
      } else {
        audioMode = 'voice';
        chantAudio = jokenpoVoice;
-       toggleBtn.textContent = 'Modo: Voz';
+       toggleBtn.textContent = '🔊';
      }
    });
  }
@@ -179,12 +179,12 @@ function setSceneImageWithFade(src, duration = 180) {
      if (bgMusic) {
        if (musicOn) {
          bgMusic.pause();
-         toggleMusicBtn.textContent = '🔇 Música: Desligada';
+         toggleMusicBtn.textContent = '🎶';
          toggleMusicBtn.classList.add('off');
        } else {
          const p = bgMusic.play();
          if (p && p.catch) p.catch(() => {});
-         toggleMusicBtn.textContent = '🔊 Música: Ligada';
+         toggleMusicBtn.textContent = '🎶';
          toggleMusicBtn.classList.remove('off');
        }
      }
@@ -304,7 +304,7 @@ preloadSceneImages();
        break;
      }
      default:
-       chantEl.innerHTML = '🕹️ Escolha sua jogada!';
+       chantEl.innerHTML = '(✊ / ✋ / ✌️) Escolha sua jogada!';
    }
  }
  
