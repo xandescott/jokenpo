@@ -73,8 +73,8 @@ body::before {
   text-align: center;
   font-size: 36px;
   font-weight: bold;
-  color: #0f1724;
-  text-shadow: 2px 2px 0 #fff, 4px 4px 0 #ffcc00;
+  color: #00ff99;
+  text-shadow: 2px 2px 0 #000, 0 0 6px #00ff99;
   animation: pulseTitle 2s infinite;
   font-family: 'Press Start 2P', cursive; /* estilo retrô opcional */
 }
@@ -205,7 +205,7 @@ body::before {
 .controls.two-column {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   align-items: flex-start;
   gap: 10px;
   width: 100%;
@@ -316,7 +316,7 @@ body::before {
 
 .result-area {
   display: flex;
-  max-width: 50px;
+  max-width: auto;
   flex-direction: column;
   gap: 12px;
   align-items: center;
@@ -364,9 +364,11 @@ body::before {
 
 .btn { /* botão Reiniciar */
   padding: 6px 14px;
+  position: relative;
+  top: 0px;
+  left: 156px;
   font-size: 15px;
   border-radius: 6px;
-  margin-bottom: 5px;
   background-color: #0f1724;
   color: white;
   border: none;
@@ -382,12 +384,18 @@ body::before {
 }
 
 /* Título do placar */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
+
 .score-title {
-  font-size: 18px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 20px;
   font-weight: 700;
-  color: #0f1724;
+  color: #ffe600; /* amarelo vibrante */
+  text-shadow: 1px 1px 0 #000, 2px 2px 4px rgba(0,0,0,0.4);
   margin: 0;
-  line-height: 1;
+  margin-bottom: -5px;
+  line-height: 1.2;
+  letter-spacing: 2px;
 }
 
 /* Placar */
@@ -395,9 +403,9 @@ body::before {
     display: grid;
     flex-direction: column;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
     margin-bottom: 1px;
-    width: 100%;
+    width: 105%;
 }
 
 /* Linha do placar (Você / Computador) */
@@ -760,7 +768,7 @@ body::before {
 }
 
 .chant.lose {
-  color: #ff0000; /* vermelho forte */
+  color: #ffae00; /* laranja pastel */
   animation: shakeLose 0.4s ease;
 }
 
@@ -835,7 +843,7 @@ body::before {
 }
 
 /* Responsivo */
-@media (max-width: 720px) {
+@media (max-width: 768px) {
   #bgVideo { display: none; }
   body {
     background: url("assets/backgrounds/medieval-scene.jpg") no-repeat center center;
@@ -849,24 +857,18 @@ body::before {
   }
   
   .controls.two-column {
-    display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
-    margin-bottom: 12px;
-    width: 100%;
+    height: auto;
   }
 
   .left-panel {
-    width: 100%;
-    max-width: 320px;
-    align-items: center;
-  }
-
-  .right-panel {
-    width: 100%;
-    max-width: 320px;
-    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 240px; /* altura fixa para evitar pulo */
+    width: auto;
+    position: relative;
   }
 
   .options {
@@ -874,9 +876,61 @@ body::before {
   }
 
   .feedback {
+    position: relative;
     align-items: center;
+    width: 100%;
+    max-width: 50vh;
+    min-height: 72px; /* garante espaço para até 2 linhas */
+    max-height: 80px; /* impede crescimento excessivo */
+    padding-bottom: 2px;
   }
   
+  /* Título do placar */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
+
+.score-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffe600; /* amarelo vibrante */
+  text-shadow: 1px 1px 0 #000, 2px 2px 4px rgba(0,0,0,0.4);
+  margin: 0;
+  margin-bottom: -4px;
+  line-height: 1.2;
+  letter-spacing: 2px;
+}
+
+  .scoreboard {
+    display: grid;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 10px;
+    width: 85%;
+}
+
+  .score-group {
+    position: absolute;
+    bottom: 0;
+    left: auto;
+    width: 40%;
+    text-align: center;
+    gap: 4px;
+  }
+
+  .btn { /* botão Reiniciar */
+    padding: 6px 14px;
+    position: relative;
+    top: 44px;
+    left: 166px;
+    font-size: 15px;
+    border-radius: 6px;
+    background-color: #0f1724;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+
   .battle,
   .chant,
   .controls {
