@@ -73,8 +73,8 @@ body::before {
   text-align: center;
   font-size: 36px;
   font-weight: bold;
-  color: #00ff99;
-  text-shadow: 2px 2px 0 #000, 0 0 6px #00ff99;
+  color: #ffe600;
+  text-shadow: 2px 2px 0 #000, 0 0 6px #ffe600;
   animation: pulseTitle 2s infinite;
   font-family: 'Press Start 2P', cursive; /* estilo retrô opcional */
 }
@@ -894,7 +894,6 @@ body::before {
   font-weight: 700;
   color: #ffe600; /* amarelo vibrante */
   text-shadow: 1px 1px 0 #000, 2px 2px 4px rgba(0,0,0,0.4);
-  margin: 0;
   margin-bottom: -4px;
   line-height: 1.2;
   letter-spacing: 2px;
@@ -905,8 +904,8 @@ body::before {
     flex-direction: column;
     align-items: center;
     gap: 4px;
-    margin-bottom: 10px;
-    width: 85%;
+    margin-bottom: 15px;
+    width: 120%;
 }
 
   .score-group {
@@ -919,10 +918,10 @@ body::before {
   }
 
   .btn { /* botão Reiniciar */
-    padding: 6px 14px;
+    padding: 6px 10px;
     position: relative;
-    top: 44px;
-    left: 166px;
+    top: 33px;
+    left: 128px;
     font-size: 15px;
     border-radius: 6px;
     background-color: #0f1724;
