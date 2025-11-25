@@ -159,11 +159,19 @@ function startMusicOnInteraction() {
     musicStarted = true;               // marca como iniciada
   }
 }
+//Captura do toque e inicia a música
+const overlay = document.getElementById('audioOverlay');
 
-// dispara apenas uma vez ao clicar, tocar na tela ou pressionar uma tecla
-window.addEventListener('click', startMusicOnInteraction, { once: true });
-window.addEventListener('touchstart', startMusicOnInteraction, { once: true });
-window.addEventListener('keydown', startMusicOnInteraction, { once: true });
+function liberarAudioComToque() {
+  startMusicOnInteraction(); // dispara música
+  if (overlay) overlay.remove(); // remove overlay após o toque
+}
+
+// dispara no primeiro toque ou clique
+if (overlay) {
+  overlay.addEventListener('touchstart', liberarAudioComToque, { once: true });
+  overlay.addEventListener('click', liberarAudioComToque, { once: true });
+}
  
  if (musicSelect) {
    musicSelect.addEventListener('change', () => {
