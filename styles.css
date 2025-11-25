@@ -362,19 +362,6 @@ body::before {
   margin-top: -2px; /* sobe o placar */ 
 }
 
-.btn { /* botão Reiniciar */
-  padding: 6px 14px;
-  position: relative;
-  top: 0px;
-  left: 156px;
-  font-size: 15px;
-  border-radius: 6px;
-  background-color: #0f1724;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
 /* Agrupamento do título + placar */
 .score-group {
   display: flex;
@@ -649,10 +636,9 @@ body::before {
 
 /* Botões */
 .music-btn,
-.mode-btn {
-  font-size: 1rem;
-  padding: 8px 12px;
-  border-radius: 6px;
+.mode-btn,
+.reset-btn {
+  padding: 0;
   border: none;
   cursor: pointer;
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
@@ -662,37 +648,75 @@ body::before {
 .music-btn {
   background-color: #10b981; /* verde */
   color: white;
-  font-size: 20px;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px; /* tamanho do emoji */
+  width: 40px;     /* largura do botão */
+  height: 40px;    /* altura do botão */
+  border: none;
+  cursor: pointer;
 }
 
 .music-btn.off {
   background-color: #da4b4b; /* vermelho claro quando desligado */
-  font-size: 20px;
+  color: white;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px; /* tamanho do emoji */
+  width: 40px;     /* largura do botão */
+  height: 40px;    /* altura do botão */
+  border: none;
+  cursor: pointer;
+}
+
+#music-btn {
+  position: fixed;
+  top: 12px;
+  left: 128px;
+  background-color: #3b82f6;
+  transform: translateX(-50%);  /* centraliza horizontalmente */
+  z-index: 1000;
+  font-size: 30px;
+  height: 40px;
+  width: 40px;
+  padding: 0;
+  border: none;
+}
+
+/* Efeito de clique */
+.music-btn:active {
+  transform: scale(0.95); /* botão encolhe levemente */
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.3); /* efeito de afundar */
+}
+
+.mode-btn:active {
+  transform: scale(0.95); /* botão encolhe levemente */
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.3); /* efeito de afundar */
 }
 
 #toggleMusic {
   position: fixed;
   top: 12px;
   left: 12px;
-  font-size: 20px;
+  font-size: 25px;
   height: 40px;
   width: 40px;
-  padding: 6px 10px;
+  padding: 0;
   
 }
 
 #toggle-audio.mode-btn {
   position: fixed;     /* fica preso à viewport */
   top: 12px;
-  left: 75px;
+  left: 80px;
   transform: translateX(-50%);  /* centraliza horizontalmente */
   z-index: 1000;
-  font-size: 20px;
+  font-size: 25px;
   height: 40px;
   width: 40px;
   background-color: #3b82f6;
   color: white;
-  padding: 6px 10px;
+  padding: 0;
   border-radius: 6px;
   border: none;
 }
@@ -701,6 +725,26 @@ body::before {
   background-color: #2563eb;       /* azul mais escuro no hover */
 }
 
+#reset-btn {
+  display: flex;
+  position: fixed;
+  align-items: center;
+  justify-content: center;
+  top: 10px;
+  left: 108px;
+  background: none;
+  font-size: 40px;
+  height: 40px;
+  width: 40px;
+  padding: 0;
+  border: none;
+}
+
+/* Efeito de clique */
+#reset-btn:active {
+  transform: scale(0.95); /* botão encolhe levemente */
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.3); /* efeito de afundar */
+}
 
 #bgVideo {
   position: fixed;
@@ -917,19 +961,6 @@ body::before {
     gap: 4px;
   }
 
-  .btn { /* botão Reiniciar */
-    padding: 6px 10px;
-    position: relative;
-    top: 44px;
-    left: 128px;
-    font-size: 15px;
-    border-radius: 6px;
-    background-color: #0f1724;
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
-
   .battle,
   .chant,
   .controls {
@@ -960,7 +991,3 @@ body::before {
     font-size: 38px;
   }
 }
-
-
-
-
