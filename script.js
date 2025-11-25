@@ -138,29 +138,32 @@ function setSceneImageWithFade(src, duration = 180) {
    });
  }
  
- let musicOn = false; // começa desligada
  let userScore = 0;
  let cpuScore = 0;
  let busy = false;
  
- // Música inicial
- if (musicSelect && bgMusic) {
-   bgMusic.src = musicSelect.value;
-   bgMusic.volume = 0.4;
-   try { bgMusic.play(); } catch (e) { /* autoplay bloqueado */ }
- }
- 
+// Configuração inicial da música (carregada, mas não toca ainda)
+if (musicSelect && bgMusic) {
+  bgMusic.src = musicSelect.value;
+  bgMusic.volume = 0.4;
+}
+  
+ let musicOn = true; // começa ligada para permitir autoplay
  let musicStarted = false;
- function startMusicOnInteraction() {
-   if (!musicStarted && musicOn && musicSelect && bgMusic) {
-     bgMusic.src = musicSelect.value;
-     const p = bgMusic.play();
-     if (p && p.catch) p.catch(() => {});
-     musicStarted = true;
-   }
- }
- window.addEventListener('mousemove', startMusicOnInteraction, { once: true });
- window.addEventListener('click', startMusicOnInteraction, { once: true });
+// Inicia música na primeira interação do usuário
+function startMusicOnInteraction() {
+  if (!musicStarted && musicSelect && bgMusic) {
+    bgMusic.src = musicSelect.value;   // define a música escolhida
+    bgMusic.volume = 0.4;              // volume inicial
+    bgMusic.play().catch(() => {});    // tenta tocar
+    musicStarted = true;               // marca como iniciada
+  }
+}
+
+// dispara apenas uma vez ao clicar, tocar na tela ou pressionar uma tecla
+window.addEventListener('click', startMusicOnInteraction, { once: true });
+window.addEventListener('touchstart', startMusicOnInteraction, { once: true });
+window.addEventListener('keydown', startMusicOnInteraction, { once: true });
  
  if (musicSelect) {
    musicSelect.addEventListener('change', () => {
@@ -174,6 +177,7 @@ function setSceneImageWithFade(src, duration = 180) {
    });
  }
  
+ // Botão de ligar/desligar música
  if (toggleMusicBtn) {
    toggleMusicBtn.addEventListener('click', () => {
      if (bgMusic) {
@@ -635,5 +639,4 @@ preloadSceneImages();
  updateScores();
  updateScoreHighlight();
  checkSuspenseLoopState();
-
  
