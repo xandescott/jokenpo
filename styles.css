@@ -731,10 +731,11 @@ body::before {
   position: fixed;
   align-items: center;
   justify-content: center;
-  top: 11px;
+  top: 12px;
   left: 108px;
-  background: none;
-  font-size: 38px;
+  background-color: #ffffff;
+  color: white;
+  font-size: 50px;
   height: 40px;
   width: 40px;
   padding: 0;
