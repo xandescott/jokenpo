@@ -52,10 +52,12 @@
     <div class="popup" role="dialog" aria-modal="true">
 
       <div class="audio-settings">
-        <button id="toggleMusic" class="music-btn">🎶</button>
-      
+        <button id="toggleMusic" class="music-btn">🎶</button>     
         <button id="toggle-audio" class="mode-btn">🔊</button>
-      
+        <div>
+          <button id="reset-btn" class="btn" type="button">🔄</button>
+        </div>
+        
         <div class="music-control">
           <label for="musicSelect">Selecionar música</label>
           <select id="musicSelect" class="music-select">
@@ -136,8 +138,6 @@
         </div>
       </div>
     </div>
-         <!-- Botão para reiniciar o placar -->
-         <button id="reset-btn" class="btn" type="button">Reiniciar</button>
   </div>
 
   <script src="script.js" defer></script>
