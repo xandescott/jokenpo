@@ -206,7 +206,7 @@ if (overlay) {
  
  // caminhos das imagens (bonecos jogando)
 const sceneImages = {
-  initial: 'assets/images/scene-initial.png',
+  initial: ['assets/images/scene-initial.png'],
   win: [ 
     'assets/images/scene-win-1.png',
     'assets/images/scene-win-2.png',
@@ -260,12 +260,18 @@ preloadSceneImages();
  
  // Reset visual
  function resetVisual() {
+ 
+   // Reseta bolhas de escolha
    if (leftChoiceEl) leftChoiceEl.textContent = '?';
    if (rightChoiceEl) rightChoiceEl.textContent = '?';
    if (leftChoiceEl) leftChoiceEl.className = 'choice-bubble';
+   
+   // Mãos fechadas
    if (rightChoiceEl) rightChoiceEl.className = 'choice-bubble';
    if (leftHand) leftHand.className = 'hand hand-left closed';
    if (rightHand) rightHand.className = 'hand hand-right closed';
+
+   // Texto e estilo do placar
    if (chantEl) {
      chantEl.classList.remove('win', 'lose', 'draw', 'shake');
      chantEl.textContent = 'Escolha sua jogada!';
@@ -469,6 +475,11 @@ preloadSceneImages();
       }
       if (result === 'lose') {
         const src = pickRandom(sceneImages.lose);
+        setSceneImageWithFade(src);
+        return;
+      }
+      if (result === 'initial') {
+        const src = sceneImages.initial;
         setSceneImageWithFade(src);
         return;
       }
